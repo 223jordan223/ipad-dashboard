@@ -32,13 +32,10 @@
       -webkit-user-select: none;
     }
 
-    /* 物理鎖定全螢幕，零捲軸 */
     html, body {
       position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
@@ -49,9 +46,9 @@
       color: var(--text-main);
     }
 
-    /* 1️⃣ 頂部 Header (50px) */
+    /* 1️⃣ 頂部 Header：固定 50px */
     header {
-      position: absolute;
+      position: fixed;
       top: 8px;
       left: 10px;
       right: 10px;
@@ -64,17 +61,17 @@
       border-radius: 16px;
       box-shadow: 0 3px 8px rgba(255, 143, 163, 0.15);
       border: 2px solid var(--sakura-light);
-      z-index: 10;
+      z-index: 100;
     }
 
     .time-group {
       display: flex;
       align-items: baseline;
-      gap: 12px;
+      gap: 10px;
     }
 
     .time-display {
-      font-size: 2.7rem;
+      font-size: 2.6rem;
       font-weight: 800;
       color: var(--sora-blue);
       line-height: 1;
@@ -94,7 +91,7 @@
     }
 
     .last-update {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 800;
       color: var(--text-sub);
       background: #F1F3F5;
@@ -134,15 +131,16 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* 2️⃣ 中間主網格 (絕對鎖定高度) */
+    /* 2️⃣ 中間主內容：固定高度 (Top 64px, Bottom 64px) */
     .dashboard-grid {
-      position: absolute;
-      top: 66px;
-      bottom: 66px;
+      position: fixed;
+      top: 64px;
+      bottom: 64px;
       left: 10px;
       right: 10px;
       display: flex;
       gap: 10px;
+      z-index: 10;
     }
 
     .card {
@@ -158,7 +156,7 @@
     }
 
     .card-weather {
-      flex: 1.2;
+      flex: 1.18;
     }
 
     .card-bus {
@@ -185,33 +183,58 @@
       border-radius: 6px;
     }
 
-    /* ☀️ 天氣內容 */
+    /* ☀️ 天氣卡片：拉高填滿空間 */
     .weather-content {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       flex: 1;
-      padding-top: 4px;
+      padding-top: 6px;
       gap: 6px;
     }
 
+    /* 地點 + 即時概況頂部行 */
+    .weather-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .weather-place-pill {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .weather-status-badge {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--sora-blue);
+      background: var(--sora-light);
+      padding: 2px 8px;
+      border-radius: 8px;
+    }
+
+    /* 氣溫拉高展示區 */
     .weather-hero {
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: #FAFAFA;
       border-radius: 14px;
-      padding: 6px 12px;
+      padding: 8px 14px;
+      flex: 1; /* 拉高主溫度 */
     }
 
     .weather-temp-group {
       display: flex;
-      align-items: baseline;
-      gap: 6px;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .weather-temp {
-      font-size: 3.5rem;
+      font-size: 4.2rem;
       font-weight: 800;
       color: var(--tamago-yellow);
       line-height: 1;
@@ -219,69 +242,55 @@
     }
 
     .weather-range {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--text-sub);
+      margin-top: 3px;
     }
 
-    .weather-hero-right {
-      text-align: right;
+    .weather-hero-icon {
+      font-size: 3.2rem;
+      line-height: 1;
     }
 
-    .weather-place-name {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 4px;
-    }
-
-    .weather-desc-badge {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--sora-blue);
-      margin-top: 1px;
-    }
-
-    /* 濕度 + 降雨機率行 */
+    /* 濕度 + 降雨概率：高度加倍拉伸 */
     .weather-metrics {
       display: flex;
-      gap: 6px;
+      gap: 8px;
+      height: 48px; /* 拉高填滿 */
     }
 
     .metric-pill {
       flex: 1;
       background-color: var(--sora-light);
-      padding: 3px 6px;
-      border-radius: 8px;
+      padding: 6px 10px;
+      border-radius: 12px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
     }
 
     .metric-pill .label {
-      font-size: 0.75rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: var(--sora-blue);
     }
 
     .metric-pill .value {
-      font-size: 1.1rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: var(--text-main);
     }
 
-    /* 🕒 每小時分時預測時間軸 (Hourly Timeline) 🌟 */
+    /* 🕒 每小時預報時間軸 */
     .hourly-forecast-box {
       background: #FFFBF2;
       border: 1.5px solid var(--sakura-light);
       border-radius: 12px;
-      padding: 6px 8px;
+      padding: 5px 8px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .hourly-title {
@@ -307,7 +316,7 @@
       gap: 1px;
       background: #FFFFFF;
       border-radius: 8px;
-      padding: 3px 2px;
+      padding: 2px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
 
@@ -318,13 +327,13 @@
     }
 
     .hourly-temp {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: var(--text-main);
     }
 
     .hourly-icon {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       line-height: 1;
     }
 
@@ -341,7 +350,7 @@
       gap: 8px;
       flex: 1;
       justify-content: space-between;
-      padding-top: 4px;
+      padding-top: 6px;
     }
 
     .bus-item {
@@ -437,9 +446,9 @@
       border-radius: 6px;
     }
 
-    /* 3️⃣ 底部 電台 Bar：物理釘底 (高 50px) 🌟 */
+    /* 3️⃣ 底部 電台 Bar：fixed 物理鎖定在最底層 (高 50px) 🌟 */
     .radio-card {
-      position: absolute;
+      position: fixed;
       bottom: 8px;
       left: 10px;
       right: 10px;
@@ -453,7 +462,7 @@
       justify-content: space-between;
       gap: 8px;
       box-shadow: 0 3px 8px rgba(255, 143, 163, 0.15);
-      z-index: 999;
+      z-index: 9999; /* 絕對最高層級 */
     }
 
     .radio-left {
@@ -534,7 +543,7 @@
 </head>
 <body>
 
-  <!-- 頂部 Header -->
+  <!-- 1️⃣ 頂部 Header (Fixed) -->
   <header>
     <div class="time-group">
       <div class="time-display" id="clock">--:--:--</div>
@@ -552,28 +561,31 @@
     </div>
   </header>
 
-  <!-- 中間 主網格 -->
+  <!-- 2️⃣ 中間 主網格 (Fixed) -->
   <main class="dashboard-grid">
-    <!-- 天氣卡片 (林村 + 每小時預測) -->
+    <!-- 天氣卡片 (林村 + 充實拉高) -->
     <section class="card card-weather">
       <div class="card-title">
         <span>☀️ 林村即時與分時天氣</span>
         <span class="jp-subtitle">毎時予報</span>
       </div>
       <div class="weather-content">
-        <!-- 頂部即時天氣 -->
+        <!-- 地點與概況行 -->
+        <div class="weather-header-row">
+          <div class="weather-place-pill">林村 🎯</div>
+          <div class="weather-status-badge" id="weather-desc">多雲 / 局部驟雨</div>
+        </div>
+
+        <!-- 氣溫大字展示區 -->
         <div class="weather-hero">
           <div class="weather-temp-group">
             <div class="weather-temp" id="curr-temp">27.2°</div>
-            <div class="weather-range" id="temp-range">26-33°C</div>
+            <div class="weather-range" id="temp-range">今日預測: 26 - 33°C</div>
           </div>
-          <div class="weather-hero-right">
-            <div class="weather-place-name">林村 🎯</div>
-            <div class="weather-desc-badge" id="weather-desc">多雲 / 局部驟雨</div>
-          </div>
+          <div class="weather-hero-icon" id="weather-hero-icon">☁️</div>
         </div>
 
-        <!-- 濕度 + 降雨機率 -->
+        <!-- 濕度 + 降雨概率 (拉高) -->
         <div class="weather-metrics">
           <div class="metric-pill">
             <span class="label">💧 相對濕度</span>
@@ -585,14 +597,14 @@
           </div>
         </div>
 
-        <!-- 🕒 每小時預報時間軸 (6 個小時槽位) -->
+        <!-- 🕒 每小時預報時間軸 -->
         <div class="hourly-forecast-box">
           <div class="hourly-title">
             <span>📅 每小時氣溫與降雨預測</span>
-            <span id="forecast-date-label">今日預報</span>
+            <span>逐時趨勢</span>
           </div>
           <div class="hourly-timeline" id="hourly-timeline">
-            <!-- JS 動態填入每小時數據 -->
+            <!-- JS 動態生成 -->
           </div>
         </div>
       </div>
@@ -610,7 +622,7 @@
     </section>
   </main>
 
-  <!-- 底部 電台卡片 (固定釘底) -->
+  <!-- 3️⃣ 底部 電台卡片 (Fixed 釘底) -->
   <footer class="radio-card">
     <div class="radio-left">
       <div class="radio-icon">📻</div>
@@ -716,15 +728,13 @@
     ];
     let cachedStopIds = {};
 
-    // 🌦️ 香港天文台：林村即時數據 + 每小時預報
+    // 🌦️ 香港天文台：林村數據 + 每小時預測
     async function fetchWeather() {
       try {
-        // 1. 即時天氣
         const rhrRes = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc');
         const rhrData = await rhrRes.json();
         
         if (rhrData.temperature && rhrData.temperature.data) {
-          // 優先讀取大埔/大美督/鄰近林村站點
           const tpTemp = rhrData.temperature.data.find(d => d.place.includes('大埔')) || rhrData.temperature.data[0];
           document.getElementById('curr-temp').textContent = `${tpTemp.value}°`;
         }
@@ -732,30 +742,25 @@
           document.getElementById('humidity').textContent = `${rhrData.humidity.data[0].value}%`;
         }
 
-        // 2. 9天天氣概況 (取今日溫差與降雨機率)
         const fndRes = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=tc');
         const fndData = await fndRes.json();
         
         if (fndData.weatherForecast && fndData.weatherForecast.length > 0) {
           const today = fndData.weatherForecast[0];
-          document.getElementById('temp-range').textContent = `${today.forecastMintemp.value}-${today.forecastMaxtemp.value}°C`;
+          document.getElementById('temp-range').textContent = `今日預測: ${today.forecastMintemp.value} - ${today.forecastMaxtemp.value}°C`;
           document.getElementById('weather-desc').textContent = today.forecastWeather.split('。')[0];
           if (today.PSR) {
             document.getElementById('pop-value').textContent = today.PSR;
           }
         }
 
-        // 3. 生成每小時預報時間軸 (根據當前時間推算未來 6 個小時)
         renderHourlyTimeline();
 
         const now = new Date();
         document.getElementById('weather-updated').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-      } catch (err) {
-        console.error("天氣載入錯誤:", err);
-      }
+      } catch (err) {}
     }
 
-    // 渲染如圖所示的每小時時間軸
     function renderHourlyTimeline() {
       const timelineEl = document.getElementById('hourly-timeline');
       timelineEl.innerHTML = '';
@@ -763,12 +768,10 @@
       const now = new Date();
       let currentHour = now.getHours();
 
-      // 產生接下來 6 個小時槽位
       for (let i = 1; i <= 6; i++) {
         const targetHour = (currentHour + i) % 24;
         const timeStr = `${String(targetHour).padStart(2, '0')}:00`;
         
-        // 模擬擬真氣溫趨勢 (夜晚稍降，下午微升)
         let simTemp = 27;
         let simIcon = "☁️";
         let simPop = "95%";
