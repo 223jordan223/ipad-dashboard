@@ -7,15 +7,14 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Kawaii Smart Dashboard</title>
   
-  <!-- 日系可愛圓體 -->
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
       --bg-cream: #FFF9E6;
       --card-bg: #FFFFFF;
-      --text-main: #4A4A4A;
-      --text-sub: #8D8D8D;
+      --text-main: #3E3E3E;
+      --text-sub: #7A7A7A;
       --sakura-pink: #FF9EBB;
       --sakura-light: #FFEBF0;
       --tamago-yellow: #FFD166;
@@ -32,82 +31,93 @@
       -webkit-user-select: none;
     }
 
-    body {
-      font-family: 'M PLUS Rounded 1c', "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-cream);
-      background-image: radial-gradient(var(--sakura-pink) 2px, transparent 2px);
-      background-size: 36px 36px;
-      color: var(--text-main);
-      padding: 18px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden; /* 徹底杜絕捲軸 */
     }
 
-    /* 頂部時鐘與刷新列 */
+    body {
+      font-family: 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-cream);
+      background-image: radial-gradient(var(--sakura-pink) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      color: var(--text-main);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* 頂部 Header：精簡緊湊 */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: var(--card-bg);
-      padding: 12px 22px;
-      border-radius: 24px;
-      box-shadow: 0 8px 24px rgba(255, 158, 187, 0.15);
-      border: 3px solid var(--sakura-light);
+      padding: 8px 16px;
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(255, 158, 187, 0.12);
+      border: 2px solid var(--sakura-light);
+      flex-shrink: 0;
+    }
+
+    .time-group {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
     }
 
     .time-display {
-      font-size: 3.4rem;
+      font-size: 2.5rem;
       font-weight: 800;
       color: var(--sora-blue);
       line-height: 1;
       letter-spacing: 1px;
-      text-shadow: 2px 2px 0px var(--sora-light);
     }
 
     .date-display {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--sakura-pink);
-      margin-top: 4px;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .last-update {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--text-sub);
-      text-align: right;
       background: #F4F6F8;
-      padding: 6px 12px;
-      border-radius: 12px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      line-height: 1.3;
+      text-align: right;
     }
 
     .refresh-btn {
       background: var(--tamago-yellow);
       border: none;
       color: #614605;
-      font-size: 1rem;
+      font-size: 0.85rem;
       font-weight: 800;
       font-family: inherit;
-      padding: 10px 16px;
-      border-radius: 16px;
+      padding: 6px 12px;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 4px 0px #D8A935;
+      box-shadow: 0 3px 0px #D8A935;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       transition: all 0.1s;
     }
 
     .refresh-btn:active {
-      transform: translateY(4px);
+      transform: translateY(3px);
       box-shadow: 0 0px 0px #D8A935;
     }
 
@@ -119,118 +129,127 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* 主網格：便當盒佈局 */
+    /* 主網格：彈性自適應高度 */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: 1fr 1.35fr;
-      gap: 16px;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 10px;
       flex: 1;
-    }
-
-    @media (max-width: 768px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
+      min-height: 0; /* 讓內部 flex 生效 */
     }
 
     .card {
       background-color: var(--card-bg);
-      border: 3px solid var(--sakura-light);
-      border-radius: 26px;
-      padding: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03), 0 4px 12px rgba(255, 158, 187, 0.1);
+      border: 2px solid var(--sakura-light);
+      border-radius: 20px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     .card-title {
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 800;
       color: var(--text-main);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 2px dashed var(--sakura-light);
-      padding-bottom: 8px;
+      padding-bottom: 6px;
+      flex-shrink: 0;
     }
 
     .card-title .jp-subtitle {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: var(--sakura-pink);
       background: var(--sakura-light);
-      padding: 3px 8px;
-      border-radius: 10px;
+      padding: 2px 6px;
+      border-radius: 8px;
     }
 
-    /* 天氣模組 */
+    /* ☀️ 天氣卡片佈局 */
+    .weather-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      flex: 1;
+      min-height: 0;
+    }
+
     .weather-main {
       display: flex;
       align-items: center;
       justify-content: space-around;
-      margin: 10px 0;
     }
 
     .weather-temp {
-      font-size: 4.6rem;
+      font-size: 3.8rem;
       font-weight: 800;
       color: var(--tamago-yellow);
+      line-height: 1;
       text-shadow: 2px 2px 0px #FFF3D6;
+    }
+
+    .weather-side {
+      text-align: right;
     }
 
     .weather-details {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: auto;
+      gap: 8px;
     }
 
     .detail-pill {
       background-color: var(--sora-light);
-      padding: 10px;
-      border-radius: 14px;
+      padding: 6px;
+      border-radius: 12px;
       text-align: center;
     }
 
     .detail-pill .label {
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: var(--sora-blue);
     }
 
     .detail-pill .value {
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 800;
       color: var(--text-main);
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .warning-box {
-      margin-top: 8px;
-      padding: 8px;
-      border-radius: 10px;
+      margin-top: 6px;
+      padding: 4px 8px;
+      border-radius: 8px;
       background: #FFE3E3;
       color: #FF6B6B;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 800;
       text-align: center;
       display: none;
     }
 
-    /* 巴士 ETA 模組 */
+    /* 🚌 巴士卡片佈局 */
     .bus-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
       flex: 1;
-      overflow-y: auto;
+      justify-content: space-around;
+      min-height: 0;
     }
 
     .bus-item {
       background-color: #FAFAFA;
-      border: 2px solid #EFEFEF;
-      border-radius: 18px;
-      padding: 14px 16px;
+      border: 1.5px solid #EFEFEF;
+      border-radius: 16px;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -239,31 +258,30 @@
     .bus-info {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .bus-route {
       background: var(--sora-blue);
       color: white;
-      font-size: 1.7rem;
+      font-size: 1.4rem;
       font-weight: 800;
-      padding: 6px 12px;
-      border-radius: 14px;
-      min-width: 75px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      min-width: 60px;
       text-align: center;
-      box-shadow: 0 4px 0px #0D6E8E;
+      box-shadow: 0 3px 0px #0D6E8E;
     }
 
     .bus-meta .dest {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 800;
     }
 
     .bus-meta .stop-name {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--text-sub);
-      margin-top: 2px;
     }
 
     .bus-eta-group {
@@ -271,22 +289,22 @@
     }
 
     .eta-badge {
-      font-size: 1.35rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--matcha-green);
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: flex-end;
-      gap: 6px;
+      gap: 5px;
     }
 
     .exact-time {
-      font-size: 0.95rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: var(--text-main);
-      background: #EDEDED;
-      padding: 2px 6px;
-      border-radius: 6px;
+      background: #EBEBEB;
+      padding: 1px 5px;
+      border-radius: 5px;
     }
 
     .eta-badge.soon {
@@ -295,152 +313,158 @@
     }
 
     .eta-next {
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: var(--text-sub);
-      margin-top: 3px;
+      margin-top: 1px;
     }
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+      50% { transform: translateY(-3px); }
     }
 
-    /* 📻 電台播放器模組 */
+    /* 📻 電台播放器：橫向扁平列 */
     .radio-card {
       background-color: var(--card-bg);
-      border: 3px solid var(--sakura-light);
-      border-radius: 24px;
-      padding: 12px 20px;
+      border: 2px solid var(--sakura-light);
+      border-radius: 18px;
+      padding: 8px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      box-shadow: 0 8px 24px rgba(255, 158, 187, 0.15);
-      flex-wrap: wrap;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(255, 158, 187, 0.12);
+      flex-shrink: 0;
     }
 
     .radio-left {
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: 220px;
+      gap: 8px;
+      min-width: 170px;
     }
 
     .radio-icon {
-      font-size: 2rem;
+      font-size: 1.4rem;
     }
 
     .radio-title {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 800;
       color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .radio-status {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 700;
       color: var(--sakura-pink);
     }
 
     .radio-channels {
       display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
+      gap: 5px;
+      overflow-x: auto;
     }
 
     .channel-btn {
       background: #F4F4F4;
       border: none;
       color: var(--text-sub);
-      padding: 6px 12px;
-      border-radius: 14px;
-      font-size: 0.85rem;
+      padding: 4px 9px;
+      border-radius: 10px;
+      font-size: 0.75rem;
       font-weight: 800;
       font-family: inherit;
       cursor: pointer;
-      transition: all 0.15s;
+      white-space: nowrap;
+      transition: all 0.1s;
     }
 
     .channel-btn.active {
       background-color: var(--sakura-pink);
       color: #fff;
-      box-shadow: 0 3px 0px #E582A0;
+      box-shadow: 0 2px 0px #E582A0;
     }
 
     .play-btn {
       background-color: var(--matcha-green);
       border: none;
       color: #fff;
-      padding: 8px 20px;
-      border-radius: 18px;
-      font-size: 1rem;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 0.85rem;
       font-weight: 800;
       font-family: inherit;
       cursor: pointer;
-      box-shadow: 0 4px 0px #05B385;
+      box-shadow: 0 3px 0px #05B385;
       transition: all 0.1s;
-      min-width: 80px;
-      text-align: center;
+      white-space: nowrap;
     }
 
     .play-btn:active {
-      transform: translateY(3px);
+      transform: translateY(2px);
       box-shadow: 0 1px 0px #05B385;
     }
 
     .play-btn.playing {
       background-color: var(--tamago-yellow);
-      box-shadow: 0 4px 0px #E5BC5C;
+      box-shadow: 0 3px 0px #E5BC5C;
       color: #7A5F19;
     }
   </style>
 </head>
 <body>
 
+  <!-- 頂部 Header -->
   <header>
-    <div>
+    <div class="time-group">
       <div class="time-display" id="clock">--:--:--</div>
-      <div class="date-display" id="date">日付けを読み込み中... 🌸</div>
+      <div class="date-display" id="date">--月--日 🌸</div>
     </div>
     
     <div class="header-right">
       <div class="last-update">
-        <div>🌦️ 天氣: <span id="weather-updated">--:--</span></div>
-        <div>🚌 巴士: <span id="bus-updated">--:--</span></div>
+        <div>🌦️ <span id="weather-updated">--:--</span></div>
+        <div>🚌 <span id="bus-updated">--:--</span></div>
       </div>
-      <!-- 🔄 即時更新按鈕 -->
       <button class="refresh-btn" id="refresh-btn" onclick="manualRefresh()">
         <span class="icon">🔄</span> 更新
       </button>
     </div>
   </header>
 
+  <!-- 主內容 Bento Grid -->
   <main class="dashboard-grid">
     <!-- 天氣卡片 -->
     <section class="card">
       <div class="card-title">
         <span>☀️ 大埔天氣</span>
-        <span class="jp-subtitle">本日の天気予報</span>
+        <span class="jp-subtitle">天気予報</span>
       </div>
-      <div class="weather-main">
-        <div class="weather-temp" id="curr-temp">--°</div>
-        <div style="text-align: right;">
-          <div id="weather-place" style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">大埔</div>
-          <div id="uv-index" style="font-size: 0.95rem; font-weight: 700; color: var(--sakura-pink); margin-top: 4px;">UV: --</div>
+      <div class="weather-content">
+        <div class="weather-main">
+          <div class="weather-temp" id="curr-temp">--°</div>
+          <div class="weather-side">
+            <div id="weather-place" style="font-size: 1.1rem; font-weight: 800;">大埔</div>
+            <div id="uv-index" style="font-size: 0.85rem; font-weight: 700; color: var(--sakura-pink); margin-top: 2px;">UV: --</div>
+          </div>
         </div>
-      </div>
 
-      <div class="warning-box" id="weather-warning"></div>
+        <div class="warning-box" id="weather-warning"></div>
 
-      <div class="weather-details">
-        <div class="detail-pill">
-          <div class="label">💧 相對濕度</div>
-          <div class="value" id="humidity">--%</div>
-        </div>
-        <div class="detail-pill" style="background-color: var(--sakura-light);">
-          <div class="label" style="color: var(--sakura-pink);">☔ 大埔雨量</div>
-          <div class="value" id="taipo-rain">0 mm</div>
+        <div class="weather-details">
+          <div class="detail-pill">
+            <div class="label">💧 相對濕度</div>
+            <div class="value" id="humidity">--%</div>
+          </div>
+          <div class="detail-pill" style="background-color: var(--sakura-light);">
+            <div class="label" style="color: var(--sakura-pink);">☔ 大埔雨量</div>
+            <div class="value" id="taipo-rain">0 mm</div>
+          </div>
         </div>
       </div>
     </section>
@@ -452,22 +476,21 @@
         <span class="jp-subtitle">次のバス</span>
       </div>
       <div class="bus-list" id="bus-container">
-        <!-- 動態載入巴士站 -->
+        <!-- 動態載入 -->
       </div>
     </section>
   </main>
 
-  <!-- 📻 電台播放器 -->
+  <!-- 底部 電台卡片 -->
   <footer class="radio-card">
     <div class="radio-left">
       <div class="radio-icon">📻</div>
       <div>
-        <div class="radio-title" id="current-station-name">雷霆 881 (商業一台)</div>
+        <div class="radio-title" id="current-station-name">雷霆 881</div>
         <div class="radio-status" id="radio-status">準備完了 ✨</div>
       </div>
     </div>
 
-    <!-- 頻道切換清單 -->
     <div class="radio-channels">
       <button class="channel-btn active" onclick="switchStation(0)">881</button>
       <button class="channel-btn" onclick="switchStation(1)">903</button>
@@ -482,34 +505,13 @@
   </footer>
 
   <script>
-    // ==========================================
-    // 📻 電台清單 (包含 881, 903, 新城, RTHK)
-    // ==========================================
     const STATIONS = [
-      {
-        name: "雷霆 881 (商業一台 - 新聞/時事)",
-        url: "https://cr-live.hkatv.net/cr1.m3u8"
-      },
-      {
-        name: "叱咤 903 (商業二台 - 流行/音樂)",
-        url: "https://cr-live.hkatv.net/cr2.m3u8"
-      },
-      {
-        name: "新城知訊台 (Metro Info - 娛樂/生活)",
-        url: "https://stream.metroradio.com.hk/metroradio/997_aac/playlist.m3u8"
-      },
-      {
-        name: "新城財經台 (Metro Finance - 財經/投資)",
-        url: "https://stream.metroradio.com.hk/metroradio/104_aac/playlist.m3u8"
-      },
-      {
-        name: "香港電台 第一台 (RTHK 1)",
-        url: "https://rthklive1-lh.akamaihd.net/i/rthk_radio1_1@355864/master.m3u8"
-      },
-      {
-        name: "香港電台 第二台 (RTHK 2)",
-        url: "https://rthklive2-lh.akamaihd.net/i/rthk_radio2_1@355865/master.m3u8"
-      }
+      { name: "雷霆 881 (商業一台)", url: "https://cr-live.hkatv.net/cr1.m3u8" },
+      { name: "叱咤 903 (商業二台)", url: "https://cr-live.hkatv.net/cr2.m3u8" },
+      { name: "新城知訊台 (997)", url: "https://stream.metroradio.com.hk/metroradio/997_aac/playlist.m3u8" },
+      { name: "新城財經台 (104)", url: "https://stream.metroradio.com.hk/metroradio/104_aac/playlist.m3u8" },
+      { name: "香港電台 第一台", url: "https://rthklive1-lh.akamaihd.net/i/rthk_radio1_1@355864/master.m3u8" },
+      { name: "香港電台 第二台", url: "https://rthklive2-lh.akamaihd.net/i/rthk_radio2_1@355865/master.m3u8" }
     ];
 
     let currentStationIdx = 0;
@@ -528,7 +530,7 @@
       audioEl.src = STATIONS[idx].url;
       if (wasPlaying) {
         statusEl.textContent = "緩衝中 ⏳...";
-        audioEl.play().catch(e => { statusEl.textContent = "請再點擊播放"; });
+        audioEl.play().catch(e => { statusEl.textContent = "請重試"; });
       } else {
         statusEl.textContent = "準備完了 ✨";
       }
@@ -542,7 +544,7 @@
           playBtn.classList.add('playing');
           statusEl.textContent = "🎶 放送中...";
         }).catch(err => {
-          statusEl.textContent = "❌ 播放失敗，請重試";
+          statusEl.textContent = "❌ 播放失敗";
         });
       } else {
         audioEl.pause();
@@ -552,23 +554,17 @@
       }
     }
 
-    // ==========================================
-    // 🕒 時鐘與日期
-    // ==========================================
     const jpDays = ["日", "月", "火", "水", "木", "金", "土"];
     function updateClock() {
       const now = new Date();
       document.getElementById('clock').textContent = 
         `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
       document.getElementById('date').textContent = 
-        `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 (${jpDays[now.getDay()]}) 🌸`;
+        `${now.getMonth() + 1}月${now.getDate()}日 (${jpDays[now.getDay()]}) 🌸`;
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // ==========================================
-    // 🚌 巴士設定 (較寮下 & 坑下甫 往太和)
-    // ==========================================
     const BUS_TRACKS = [
       { id: "kau_liu_ha_64k", route: "64K", bound: "inbound", serviceType: "1", targetStopName: "較寮下", destName: "太和", displayStop: "較寮下" },
       { id: "hang_ha_po_64k", route: "64K", bound: "inbound", serviceType: "1", targetStopName: "坑下甫", destName: "太和", displayStop: "坑下甫" }
@@ -585,7 +581,7 @@
           document.getElementById('curr-temp').textContent = `${tpTemp.value}°`;
         }
         if (data.humidity && data.humidity.data.length > 0) document.getElementById('humidity').textContent = `${data.humidity.data[0].value}%`;
-        if (data.uvindex && data.uvindex.data && data.uvindex.data.length > 0) document.getElementById('uv-index').textContent = `UV: ${data.uvindex.data[0].value}`;
+        if (data.uvindex && data.uvindex.data.length > 0) document.getElementById('uv-index').textContent = `UV: ${data.uvindex.data[0].value}`;
         
         if (data.rainfall && data.rainfall.data) {
           const tpRain = data.rainfall.data.find(d => d.place.includes('大埔'));
@@ -625,8 +621,8 @@
               <div class="bus-info">
                 <div class="bus-route">${item.route}</div>
                 <div class="bus-meta">
-                  <div class="dest">📍 往 ${item.destName}</div>
-                  <div class="stop-name">🚍 ${item.displayStop}</div>
+                  <div class="dest">往 ${item.destName}</div>
+                  <div class="stop-name">${item.displayStop}</div>
                 </div>
               </div>
               <div class="bus-eta-group" id="eta-box-${item.id}">
@@ -662,7 +658,6 @@
 
             if (validEtas.length > 0) {
               const first = validEtas[0];
-              // 後續班次格式：15分 (07:55) / 26分 (08:06)
               const next = validEtas.slice(1, 3).map(d => `${d.min}分 (${d.exactTime})`).join(' / ');
               
               targetEl.innerHTML = `
@@ -673,7 +668,7 @@
                 ${next ? `<div class="eta-next">下班: ${next}</div>` : ''}
               `;
             } else { 
-              targetEl.innerHTML = `<div class="eta-badge" style="color:var(--text-sub); font-size:1.1rem;">沒有班次</div>`; 
+              targetEl.innerHTML = `<div class="eta-badge" style="color:var(--text-sub); font-size:0.9rem;">沒有班次</div>`; 
             }
           }
         } catch (err) {}
@@ -682,19 +677,13 @@
       document.getElementById('bus-updated').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
     }
 
-    // ==========================================
-    // 🔄 手動即時更新邏輯
-    // ==========================================
     async function manualRefresh() {
       const btn = document.getElementById('refresh-btn');
       btn.classList.add('spinning');
       await Promise.all([fetchWeather(), fetchBusETA()]);
-      setTimeout(() => {
-        btn.classList.remove('spinning');
-      }, 500);
+      setTimeout(() => { btn.classList.remove('spinning'); }, 500);
     }
 
-    // 初始化與定時更新 (天氣 10 分鐘，巴士 30 秒)
     fetchWeather();
     fetchBusETA();
     setInterval(fetchWeather, 600000);
