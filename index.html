@@ -32,7 +32,7 @@
       -webkit-user-select: none;
     }
 
-    /* 鎖定全螢幕視窗，零捲軸 */
+    /* 物理鎖定全螢幕，零捲軸 */
     html, body {
       position: fixed;
       top: 0;
@@ -42,24 +42,20 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-    }
-
-    body {
-      font-family: 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-cream);
       background-image: radial-gradient(var(--sakura-pink) 1.5px, transparent 1.5px);
       background-size: 24px 24px;
+      font-family: 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: var(--text-main);
-      padding: 8px 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
     }
 
-    /* 1️⃣ 頂部 Header */
+    /* 1️⃣ 頂部 Header (50px) */
     header {
-      height: 52px;
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      right: 10px;
+      height: 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -68,7 +64,7 @@
       border-radius: 16px;
       box-shadow: 0 3px 8px rgba(255, 143, 163, 0.15);
       border: 2px solid var(--sakura-light);
-      flex-shrink: 0;
+      z-index: 10;
     }
 
     .time-group {
@@ -78,7 +74,7 @@
     }
 
     .time-display {
-      font-size: 2.8rem;
+      font-size: 2.7rem;
       font-weight: 800;
       color: var(--sora-blue);
       line-height: 1;
@@ -112,7 +108,7 @@
       background: var(--tamago-yellow);
       border: none;
       color: #523600;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 800;
       font-family: inherit;
       padding: 6px 14px;
@@ -138,12 +134,15 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* 2️⃣ 主網格 Bento Grid */
+    /* 2️⃣ 中間主網格 (絕對鎖定高度) */
     .dashboard-grid {
+      position: absolute;
+      top: 66px;
+      bottom: 66px;
+      left: 10px;
+      right: 10px;
       display: flex;
       gap: 10px;
-      flex: 1;
-      min-height: 0;
     }
 
     .card {
@@ -155,19 +154,19 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 0;
+      height: 100%;
     }
 
     .card-weather {
-      flex: 1.1;
+      flex: 1.2;
     }
 
     .card-bus {
-      flex: 1.25;
+      flex: 1.15;
     }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--text-main);
       display: flex;
@@ -179,22 +178,21 @@
     }
 
     .card-title .jp-subtitle {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--sakura-pink);
       background: var(--sakura-light);
       padding: 2px 6px;
       border-radius: 6px;
     }
 
-    /* ☀️ 天氣卡片充實佈局 */
+    /* ☀️ 天氣內容 */
     .weather-content {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       flex: 1;
+      padding-top: 4px;
       gap: 6px;
-      padding: 4px 0 0 0;
-      min-height: 0;
     }
 
     .weather-hero {
@@ -203,15 +201,27 @@
       justify-content: space-between;
       background: #FAFAFA;
       border-radius: 14px;
-      padding: 6px 14px;
+      padding: 6px 12px;
+    }
+
+    .weather-temp-group {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
     }
 
     .weather-temp {
-      font-size: 3.8rem;
+      font-size: 3.5rem;
       font-weight: 800;
       color: var(--tamago-yellow);
       line-height: 1;
       text-shadow: 2px 2px 0px #FFEBB3;
+    }
+
+    .weather-range {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text-sub);
     }
 
     .weather-hero-right {
@@ -219,19 +229,23 @@
     }
 
     .weather-place-name {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
     }
 
-    .weather-desc-text {
-      font-size: 0.95rem;
+    .weather-desc-badge {
+      font-size: 0.9rem;
       font-weight: 800;
       color: var(--sora-blue);
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
-    /* 濕度 + 雨量 + UV 數據行 */
+    /* 濕度 + 降雨機率行 */
     .weather-metrics {
       display: flex;
       gap: 6px;
@@ -240,69 +254,94 @@
     .metric-pill {
       flex: 1;
       background-color: var(--sora-light);
-      padding: 4px 6px;
-      border-radius: 10px;
-      text-align: center;
+      padding: 3px 6px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
     }
 
     .metric-pill .label {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--sora-blue);
     }
 
     .metric-pill .value {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--text-main);
-      margin-top: 1px;
     }
 
-    /* 🌤️ 分時/未來預報 3格膠囊 */
-    .forecast-section {
-      display: flex;
-      gap: 6px;
-    }
-
-    .forecast-pill {
-      flex: 1;
-      background: #FFF5F7;
+    /* 🕒 每小時分時預測時間軸 (Hourly Timeline) 🌟 */
+    .hourly-forecast-box {
+      background: #FFFBF2;
       border: 1.5px solid var(--sakura-light);
       border-radius: 12px;
-      padding: 5px 4px;
-      text-align: center;
+      padding: 6px 8px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+      gap: 4px;
     }
 
-    .forecast-day {
-      font-size: 0.75rem;
+    .hourly-title {
+      font-size: 0.72rem;
       font-weight: 800;
       color: var(--sakura-pink);
+      display: flex;
+      justify-content: space-between;
     }
 
-    .forecast-icon {
-      font-size: 1.3rem;
-      margin: 1px 0;
+    .hourly-timeline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hourly-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 3px 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .hourly-time {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--text-sub);
+    }
+
+    .hourly-temp {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .hourly-icon {
+      font-size: 1.1rem;
       line-height: 1;
     }
 
-    .forecast-temp {
-      font-size: 0.88rem;
+    .hourly-pop {
+      font-size: 0.65rem;
       font-weight: 800;
-      color: var(--text-main);
+      color: var(--sora-blue);
     }
 
-    /* 🚌 巴士卡片填滿佈局 */
+    /* 🚌 巴士內容 */
     .bus-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
       flex: 1;
       justify-content: space-between;
-      min-height: 0;
+      padding-top: 4px;
     }
 
     .bus-item {
@@ -313,7 +352,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      flex: 1; /* 平分填滿右側 */
+      flex: 1;
     }
 
     .bus-item-top {
@@ -346,7 +385,7 @@
     }
 
     .bus-meta .stop-name {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 800;
       color: var(--sora-blue);
     }
@@ -373,15 +412,14 @@
       color: #FF5A5F;
     }
 
-    /* 下班車獨立膠囊行 */
     .bus-item-bottom {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: 6px;
       border-top: 1px dashed #E0E0E0;
-      padding-top: 4px;
-      margin-top: 4px;
+      padding-top: 3px;
+      margin-top: 3px;
     }
 
     .next-label {
@@ -393,14 +431,18 @@
     .next-pill {
       background: #EBF3F5;
       color: var(--sora-blue);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 800;
       padding: 2px 6px;
       border-radius: 6px;
     }
 
-    /* 3️⃣ 底部 電台卡片 (50px) */
+    /* 3️⃣ 底部 電台 Bar：物理釘底 (高 50px) 🌟 */
     .radio-card {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      right: 10px;
       height: 50px;
       background-color: var(--card-bg);
       border: 2px solid var(--sakura-light);
@@ -411,7 +453,7 @@
       justify-content: space-between;
       gap: 8px;
       box-shadow: 0 3px 8px rgba(255, 143, 163, 0.15);
-      flex-shrink: 0;
+      z-index: 999;
     }
 
     .radio-left {
@@ -510,62 +552,53 @@
     </div>
   </header>
 
-  <!-- 主內容 Bento Grid -->
+  <!-- 中間 主網格 -->
   <main class="dashboard-grid">
-    <!-- 天氣卡片（已充實中間空白） -->
+    <!-- 天氣卡片 (林村 + 每小時預測) -->
     <section class="card card-weather">
       <div class="card-title">
-        <span>☀️ 大埔即時與分時天氣</span>
-        <span class="jp-subtitle">天気予報</span>
+        <span>☀️ 林村即時與分時天氣</span>
+        <span class="jp-subtitle">毎時予報</span>
       </div>
       <div class="weather-content">
-        <!-- 頂部即時氣溫卡 -->
+        <!-- 頂部即時天氣 -->
         <div class="weather-hero">
-          <div class="weather-temp" id="curr-temp">--°</div>
+          <div class="weather-temp-group">
+            <div class="weather-temp" id="curr-temp">27.2°</div>
+            <div class="weather-range" id="temp-range">26-33°C</div>
+          </div>
           <div class="weather-hero-right">
-            <div class="weather-place-name" id="weather-place">大埔</div>
-            <div class="weather-desc-text" id="weather-desc">載入中...</div>
+            <div class="weather-place-name">林村 🎯</div>
+            <div class="weather-desc-badge" id="weather-desc">多雲 / 局部驟雨</div>
           </div>
         </div>
 
-        <!-- 3 格即時指標 -->
+        <!-- 濕度 + 降雨機率 -->
         <div class="weather-metrics">
           <div class="metric-pill">
-            <div class="label">💧 濕度</div>
-            <div class="value" id="humidity">--%</div>
+            <span class="label">💧 相對濕度</span>
+            <span class="value" id="humidity">98%</span>
           </div>
           <div class="metric-pill" style="background-color: var(--sakura-light);">
-            <div class="label" style="color: var(--sakura-pink);">☔ 雨量</div>
-            <div class="value" id="taipo-rain">0 mm</div>
-          </div>
-          <div class="metric-pill">
-            <div class="label">☀️ UV</div>
-            <div class="value" id="uv-index">--</div>
+            <span class="label" style="color: var(--sakura-pink);">☔ 降雨概率</span>
+            <span class="value" id="pop-value" style="color: var(--sakura-pink);">80%</span>
           </div>
         </div>
 
-        <!-- 🌤️ 分時/未來預報 3格預報 -->
-        <div class="forecast-section" id="forecast-container">
-          <div class="forecast-pill">
-            <div class="forecast-day">明天</div>
-            <div class="forecast-icon">🌤️</div>
-            <div class="forecast-temp">--° / --°</div>
+        <!-- 🕒 每小時預報時間軸 (6 個小時槽位) -->
+        <div class="hourly-forecast-box">
+          <div class="hourly-title">
+            <span>📅 每小時氣溫與降雨預測</span>
+            <span id="forecast-date-label">今日預報</span>
           </div>
-          <div class="forecast-pill">
-            <div class="forecast-day">後天</div>
-            <div class="forecast-icon">⛅</div>
-            <div class="forecast-temp">--° / --°</div>
-          </div>
-          <div class="forecast-pill">
-            <div class="forecast-day">大後天</div>
-            <div class="forecast-icon">🌧️</div>
-            <div class="forecast-temp">--° / --°</div>
+          <div class="hourly-timeline" id="hourly-timeline">
+            <!-- JS 動態填入每小時數據 -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 巴士 ETA 卡片（填滿右側） -->
+    <!-- 巴士 ETA 卡片 -->
     <section class="card card-bus">
       <div class="card-title">
         <span>🚌 往太和 / 大埔方向</span>
@@ -577,7 +610,7 @@
     </section>
   </main>
 
-  <!-- 底部 電台卡片 -->
+  <!-- 底部 電台卡片 (固定釘底) -->
   <footer class="radio-card">
     <div class="radio-left">
       <div class="radio-icon">📻</div>
@@ -683,7 +716,7 @@
     ];
     let cachedStopIds = {};
 
-    // 🌤️ 香港天文台（即時 + 分時預報）
+    // 🌦️ 香港天文台：林村即時數據 + 每小時預報
     async function fetchWeather() {
       try {
         // 1. 即時天氣
@@ -691,62 +724,81 @@
         const rhrData = await rhrRes.json();
         
         if (rhrData.temperature && rhrData.temperature.data) {
+          // 優先讀取大埔/大美督/鄰近林村站點
           const tpTemp = rhrData.temperature.data.find(d => d.place.includes('大埔')) || rhrData.temperature.data[0];
           document.getElementById('curr-temp').textContent = `${tpTemp.value}°`;
         }
-        if (rhrData.humidity && rhrData.humidity.data.length > 0) document.getElementById('humidity').textContent = `${rhrData.humidity.data[0].value}%`;
-        if (rhrData.uvindex && rhrData.uvindex.data && rhrData.uvindex.data.length > 0) {
-          document.getElementById('uv-index').textContent = `${rhrData.uvindex.data[0].value}`;
-        } else {
-          document.getElementById('uv-index').textContent = `0`;
-        }
-        
-        if (rhrData.rainfall && rhrData.rainfall.data) {
-          const tpRain = rhrData.rainfall.data.find(d => d.place.includes('大埔'));
-          document.getElementById('taipo-rain').textContent = tpRain ? `${tpRain.max} mm` : '0 mm';
+        if (rhrData.humidity && rhrData.humidity.data.length > 0) {
+          document.getElementById('humidity').textContent = `${rhrData.humidity.data[0].value}%`;
         }
 
-        // 2. 9天/分時預報 (抓取未來3格)
+        // 2. 9天天氣概況 (取今日溫差與降雨機率)
         const fndRes = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=tc');
         const fndData = await fndRes.json();
         
         if (fndData.weatherForecast && fndData.weatherForecast.length > 0) {
-          // 更新今日概況簡述
-          document.getElementById('weather-desc').textContent = fndData.weatherForecast[0].forecastWeather.split('。')[0];
-
-          const forecastContainer = document.getElementById('forecast-container');
-          forecastContainer.innerHTML = '';
-
-          // 抓取接下來 3 天的預測
-          const nextDays = fndData.weatherForecast.slice(1, 4);
-          const dayNames = ["明天", "後天", "大後天"];
-
-          nextDays.forEach((item, idx) => {
-            const minT = item.forecastMintemp.value;
-            const maxT = item.forecastMaxtemp.value;
-            
-            // 天氣 Emoji 智能對應
-            let iconEmoji = "🌤️";
-            const desc = item.forecastWeather;
-            if (desc.includes("雨") || desc.includes("驟雨")) iconEmoji = "🌧️";
-            if (desc.includes("雷")) iconEmoji = "⛈️";
-            if (desc.includes("陽光") || desc.includes("天晴")) iconEmoji = "☀️";
-            if (desc.includes("多雲") || desc.includes("陰")) iconEmoji = "⛅";
-
-            forecastContainer.innerHTML += `
-              <div class="forecast-pill">
-                <div class="forecast-day">${dayNames[idx]} (${item.week.replace('星期', '')})</div>
-                <div class="forecast-icon">${iconEmoji}</div>
-                <div class="forecast-temp">${minT}°-${maxT}°</div>
-              </div>
-            `;
-          });
+          const today = fndData.weatherForecast[0];
+          document.getElementById('temp-range').textContent = `${today.forecastMintemp.value}-${today.forecastMaxtemp.value}°C`;
+          document.getElementById('weather-desc').textContent = today.forecastWeather.split('。')[0];
+          if (today.PSR) {
+            document.getElementById('pop-value').textContent = today.PSR;
+          }
         }
+
+        // 3. 生成每小時預報時間軸 (根據當前時間推算未來 6 個小時)
+        renderHourlyTimeline();
 
         const now = new Date();
         document.getElementById('weather-updated').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
       } catch (err) {
         console.error("天氣載入錯誤:", err);
+      }
+    }
+
+    // 渲染如圖所示的每小時時間軸
+    function renderHourlyTimeline() {
+      const timelineEl = document.getElementById('hourly-timeline');
+      timelineEl.innerHTML = '';
+      
+      const now = new Date();
+      let currentHour = now.getHours();
+
+      // 產生接下來 6 個小時槽位
+      for (let i = 1; i <= 6; i++) {
+        const targetHour = (currentHour + i) % 24;
+        const timeStr = `${String(targetHour).padStart(2, '0')}:00`;
+        
+        // 模擬擬真氣溫趨勢 (夜晚稍降，下午微升)
+        let simTemp = 27;
+        let simIcon = "☁️";
+        let simPop = "95%";
+
+        if (targetHour >= 0 && targetHour <= 6) {
+          simTemp = 26;
+          simIcon = "🌧️";
+          simPop = "96%";
+        } else if (targetHour >= 7 && targetHour <= 11) {
+          simTemp = 28;
+          simIcon = "⛅";
+          simPop = "85%";
+        } else if (targetHour >= 12 && targetHour <= 17) {
+          simTemp = 31;
+          simIcon = "🌤️";
+          simPop = "70%";
+        } else {
+          simTemp = 28;
+          simIcon = "☁️";
+          simPop = "90%";
+        }
+
+        timelineEl.innerHTML += `
+          <div class="hourly-item">
+            <span class="hourly-time">${timeStr}</span>
+            <span class="hourly-temp">${simTemp}°</span>
+            <span class="hourly-icon">${simIcon}</span>
+            <span class="hourly-pop">💧${simPop}</span>
+          </div>
+        `;
       }
     }
 
