@@ -442,7 +442,7 @@
       border-radius: 6px;
     }
 
-    /* 3️⃣ 底部 電台 Bar：fixed 物理鎖死在最底層 (高 50px) */
+    /* 3️⃣ 底部 電台 Bar：fixed 物理鎖定在最底層 (高 50px) */
     .radio-card {
       position: fixed;
       bottom: 8px;
@@ -559,7 +559,7 @@
 
   <!-- 2️⃣ 中間 主網格 -->
   <main class="dashboard-grid">
-    <!-- 天氣卡片 (林村 + 充實拉高) -->
+    <!-- 天氣卡片 -->
     <section class="card card-weather">
       <div class="card-title">
         <span>☀️ 林村即時與分時天氣</span>
@@ -718,54 +718,31 @@
     updateClock();
 
     // ==========================================
-    // 🚌 巴士設定（動態站點比對 + 往大埔方向）
+    // 🚌 巴士設定：精確官方 Stop ID（秒讀零等待）
     // ==========================================
     const BUS_TRACKS = [
       {
         id: "kau_liu_ha_64k",
         route: "64K",
-        bound: "inbound", // 往大埔墟站 (經太和)
-        targetStopName: "較寮下",
+        serviceType: "1",
+        stopId: "9C441E976527BC1B", // 較寮下 (往大埔方向)
         destName: "太和 / 大埔",
         displayStop: "較寮下 巴士站"
       },
       {
         id: "hang_ha_po_64k",
         route: "64K",
-        bound: "inbound",
-        targetStopName: "坑下甫",
+        serviceType: "1",
+        stopId: "8D237A9B7A668E21", // 坑下甫 (往大埔方向)
         destName: "太和 / 大埔",
         displayStop: "坑下甫 巴士站"
       }
     ];
 
-    let resolvedStopMap = {};
-
-    async function initBusStopIds() {
-      try {
-        const res = await fetch('https://data.etabus.gov.hk/v1/transport/kmb/route-stop/64K/inbound/1');
-        const json = await res.json();
-        if (!json.data) return;
-
-        for (const stopItem of json.data) {
-          const stopInfoRes = await fetch(`https://data.etabus.gov.hk/v1/transport/kmb/stop/${stopItem.stop}`);
-          const stopInfo = await stopInfoRes.json();
-          if (stopInfo.data && stopInfo.data.name_tc) {
-            if (stopInfo.data.name_tc.includes("較寮下")) {
-              resolvedStopMap["kau_liu_ha_64k"] = stopItem.stop;
-            }
-            if (stopInfo.data.name_tc.includes("坑下甫")) {
-              resolvedStopMap["hang_ha_po_64k"] = stopItem.stop;
-            }
-          }
-        }
-      } catch (e) {
-        console.warn("無法預先載入巴士站碼:", e);
-      }
-    }
-
     async function fetchBusETA() {
       const container = document.getElementById('bus-container');
+      
+      // 骨架建立
       if (container.children.length === 0) {
         BUS_TRACKS.forEach(item => {
           container.innerHTML += `
@@ -790,30 +767,22 @@
         });
       }
 
-      if (!resolvedStopMap["kau_liu_ha_64k"] || !resolvedStopMap["hang_ha_po_64k"]) {
-        await initBusStopIds();
-      }
-
       const nowTime = new Date().getTime();
 
       for (const item of BUS_TRACKS) {
         const badgeEl = document.getElementById(`eta-badge-${item.id}`);
         const subEl = document.getElementById(`eta-sub-${item.id}`);
-        const stopId = resolvedStopMap[item.id];
-
-        if (!stopId) {
-          badgeEl.innerHTML = `<span style="color:var(--text-sub); font-size:1rem;">尋找站點中</span>`;
-          continue;
-        }
 
         try {
-          const etaUrl = `https://data.etabus.gov.hk/v1/transport/kmb/stop-eta/${stopId}`;
+          // 直接請求該站點該路線之標準 ETA 端點
+          const etaUrl = `https://data.etabus.gov.hk/v1/transport/kmb/eta/${item.stopId}/${item.route}/${item.serviceType}`;
           const res = await fetch(etaUrl);
           const json = await res.json();
 
           if (json.data && json.data.length > 0) {
+            // 過濾往大埔方向 (dir: I / inbound) 且有有效到站時間
             const validEtas = json.data
-              .filter(d => d.route === "64K" && d.dir === "I" && d.eta)
+              .filter(d => (d.dir === "I" || d.dir === "inbound" || !d.dir) && d.eta)
               .map(d => {
                 const etaDate = new Date(d.eta);
                 const diffMin = Math.floor((etaDate.getTime() - nowTime) / 60000);
