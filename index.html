@@ -91,11 +91,11 @@
     }
 
     .last-update {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: var(--text-sub);
       background: #F1F3F5;
-      padding: 4px 8px;
+      padding: 5px 10px;
       border-radius: 8px;
       line-height: 1.2;
       text-align: right;
@@ -147,7 +147,7 @@
       background-color: var(--card-bg);
       border: 2px solid var(--sakura-light);
       border-radius: 18px;
-      padding: 10px 14px;
+      padding: 12px 16px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
@@ -156,30 +156,30 @@
     }
 
     .card-weather {
-      flex: 1.1;
+      flex: 1.05;
     }
 
     .card-bus {
-      flex: 1.25;
+      flex: 1.35;
     }
 
     .card-title {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 800;
       color: var(--text-main);
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 2px dashed var(--sakura-light);
-      padding-bottom: 4px;
+      padding-bottom: 6px;
       flex-shrink: 0;
     }
 
     .card-title .jp-subtitle {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--sakura-pink);
       background: var(--sakura-light);
-      padding: 2px 6px;
+      padding: 2px 8px;
       border-radius: 6px;
     }
 
@@ -189,8 +189,8 @@
       flex-direction: column;
       justify-content: space-between;
       flex: 1;
-      padding-top: 4px;
-      gap: 6px;
+      padding-top: 6px;
+      gap: 8px;
     }
 
     .weather-header-row {
@@ -201,17 +201,17 @@
     }
 
     .weather-place-pill {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 800;
       color: var(--text-main);
     }
 
     .weather-status-badge {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--sora-blue);
       background: var(--sora-light);
-      padding: 3px 9px;
+      padding: 3px 10px;
       border-radius: 8px;
     }
 
@@ -221,7 +221,7 @@
       justify-content: space-between;
       background: #FAFAFA;
       border-radius: 14px;
-      padding: 8px 14px;
+      padding: 10px 16px;
       flex: 1;
     }
 
@@ -232,7 +232,7 @@
     }
 
     .weather-temp {
-      font-size: 4.4rem;
+      font-size: 4.6rem;
       font-weight: 800;
       color: var(--tamago-yellow);
       line-height: 1;
@@ -240,27 +240,27 @@
     }
 
     .weather-range {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 800;
       color: var(--text-sub);
-      margin-top: 3px;
+      margin-top: 4px;
     }
 
     .weather-hero-icon {
-      font-size: 3.4rem;
+      font-size: 3.6rem;
       line-height: 1;
     }
 
     .weather-metrics {
       display: flex;
-      gap: 8px;
-      height: 48px;
+      gap: 10px;
+      height: 52px;
     }
 
     .metric-pill {
       flex: 1;
       background-color: var(--sora-light);
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 12px;
       display: flex;
       justify-content: space-between;
@@ -268,13 +268,13 @@
     }
 
     .metric-pill .label {
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--sora-blue);
     }
 
     .metric-pill .value {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 800;
       color: var(--text-main);
     }
@@ -283,14 +283,14 @@
       background: #FFFBF2;
       border: 1.5px solid var(--sakura-light);
       border-radius: 12px;
-      padding: 5px 8px;
+      padding: 6px 10px;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
     }
 
     .hourly-title {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: var(--sakura-pink);
       display: flex;
@@ -309,41 +309,41 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1px;
+      gap: 2px;
       background: #FFFFFF;
       border-radius: 8px;
-      padding: 2px;
+      padding: 3px 2px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
 
     .hourly-time {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--text-sub);
     }
 
     .hourly-temp {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--text-main);
     }
 
     .hourly-icon {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       line-height: 1;
     }
 
     .hourly-pop {
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       font-weight: 800;
       color: var(--sora-blue);
     }
 
-    /* 🚌 巴士卡片：大字體全面填滿版 🌟 */
+    /* 🚌 巴士卡片：超大字體 ＋ 消除留白 🌟 */
     .bus-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       flex: 1;
       justify-content: space-between;
       padding-top: 6px;
@@ -351,12 +351,12 @@
 
     .bus-item {
       background-color: #FAFAFA;
-      border: 2px solid #EAEAEA;
-      border-radius: 16px;
-      padding: 12px 14px;
+      border: 2.5px solid #EAEAEA;
+      border-radius: 18px;
+      padding: 16px 18px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: space-around; /* 均勻拉開上下空間 */
       flex: 1;
     }
 
@@ -364,56 +364,55 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex: 1;
     }
 
     .bus-info {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .bus-route {
       background: var(--sora-blue);
       color: white;
-      font-size: 2.3rem; /* 大幅放大 */
+      font-size: 2.8rem; /* 路線號碼超大 */
       font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 12px;
-      min-width: 78px;
+      padding: 6px 16px;
+      border-radius: 14px;
+      min-width: 90px;
       text-align: center;
       box-shadow: 0 3px 0px #01545E;
     }
 
     .bus-meta .dest {
-      font-size: 1.35rem; /* 大幅放大 */
+      font-size: 1.6rem; /* 目的地字體加大 */
       font-weight: 800;
       color: var(--text-main);
     }
 
     .bus-meta .stop-name {
-      font-size: 0.98rem; /* 大幅放大 */
+      font-size: 1.15rem; /* 站名加大 */
       font-weight: 800;
       color: var(--sora-blue);
-      margin-top: 3px;
+      margin-top: 4px;
     }
 
     .eta-badge {
-      font-size: 2.2rem; /* 主倒數大字體 🌟 */
+      font-size: 2.8rem; /* 主到站時間超大字體 🌟 */
       font-weight: 800;
       color: var(--matcha-green);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
 
     .exact-time {
-      font-size: 1.25rem; /* 抵達時間放大 */
+      font-size: 1.5rem; /* 實際抵達鐘點加大 */
       font-weight: 800;
       color: var(--text-main);
       background: #E8ECEF;
-      padding: 3px 8px;
-      border-radius: 8px;
+      padding: 4px 12px;
+      border-radius: 10px;
     }
 
     .eta-badge.soon {
@@ -424,14 +423,14 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 8px;
-      border-top: 1.5px dashed #E0E0E0;
-      padding-top: 8px;
-      margin-top: 6px;
+      gap: 10px;
+      border-top: 2px dashed #E0E0E0;
+      padding-top: 10px;
+      margin-top: 8px;
     }
 
     .next-label {
-      font-size: 0.92rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--text-sub);
     }
@@ -439,10 +438,10 @@
     .next-pill {
       background: #EBF3F5;
       color: var(--sora-blue);
-      font-size: 0.95rem; /* 後續班次放大 */
+      font-size: 1.15rem; /* 後續班次加大 🌟 */
       font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 8px;
+      padding: 5px 14px;
+      border-radius: 10px;
     }
 
     /* 3️⃣ 底部 電台 Bar：fixed 物理鎖定在最底層 */
@@ -605,7 +604,7 @@
       </div>
     </section>
 
-    <!-- 巴士 ETA 卡片 -->
+    <!-- 巴士 ETA 卡片 (大字體滿版) -->
     <section class="card card-bus">
       <div class="card-title">
         <span>🚌 往太和 / 大埔方向</span>
@@ -766,7 +765,7 @@
     updateClock();
 
     // ==========================================
-    // 🚌 巴士自動定位與 ETA 解析機制 (去重 + 大字體)
+    // 🚌 巴士自動定位與 ETA 解析機制 (去重 + 3 班次完整呈現)
     // ==========================================
     var cachedStopIds = {
       kau_liu_ha: null,
@@ -810,13 +809,19 @@
       if (!badgeEl || !subEl) return;
 
       if (!stopId) {
-        badgeEl.innerHTML = '<span style="color:var(--text-sub); font-size:1.1rem;">定位站點中...</span>';
+        badgeEl.innerHTML = '<span style="color:var(--text-sub); font-size:1.3rem;">定位站點中...</span>';
         return;
       }
 
       try {
-        var res = await fetch('https://data.etabus.gov.hk/v1/transport/kmb/stop-eta/' + stopId);
+        // 優先查詢正線 64K/1，若空則調用 stop-eta
+        var res = await fetch('https://data.etabus.gov.hk/v1/transport/kmb/eta/' + stopId + '/64K/1');
         var json = await res.json();
+        if (!json.data || json.data.length === 0) {
+          var res2 = await fetch('https://data.etabus.gov.hk/v1/transport/kmb/stop-eta/' + stopId);
+          json = await res2.json();
+        }
+
         var nowTime = new Date().getTime();
 
         if (json.data && json.data.length > 0) {
@@ -844,17 +849,19 @@
 
           rawList.sort(function(a, b) { return a.timestamp - b.timestamp; });
 
-          // 🌟 核心修正 1：時間完全去重（避免主到站與後續班次重複）
+          // 🌟 嚴格時間去重（保證每一班車的時間點都互不相同）
           var validEtas = [];
           var seenTimes = {};
           for (var k = 0; k < rawList.length; k++) {
-            if (!seenTimes[rawList[k].exactTime]) {
-              seenTimes[rawList[k].exactTime] = true;
+            var timeKey = rawList[k].exactTime;
+            if (!seenTimes[timeKey]) {
+              seenTimes[timeKey] = true;
               validEtas.push(rawList[k]);
             }
           }
 
           if (validEtas.length > 0) {
+            // 第 1 班車（即將到站）
             var first = validEtas[0];
             var isSoon = first.min <= 3;
 
@@ -866,7 +873,7 @@
             badgeEl.innerHTML = '<span>' + statusText + '</span>' +
                                 '<span class="exact-time">' + first.exactTime + '</span>';
 
-            // 後續班次（取第 2、3 班）
+            // 後續班次：取第 2 班與第 3 班
             var nextEtas = validEtas.slice(1, 3);
             if (nextEtas.length > 0) {
               var nextHtml = '';
@@ -880,16 +887,16 @@
             }
           } else {
             badgeEl.className = 'eta-badge';
-            badgeEl.innerHTML = '<span style="color:var(--text-sub); font-size:1.1rem;">末班車已過 / 暫無班次</span>';
+            badgeEl.innerHTML = '<span style="color:var(--text-sub); font-size:1.3rem;">末班車已過 / 暫無班次</span>';
             subEl.innerHTML = '';
           }
         } else {
           badgeEl.className = 'eta-badge';
-          badgeEl.innerHTML = '<span style="color:var(--text-sub); font-size:1.1rem;">暫無即時班次</span>';
+          badgeEl.innerHTML = '<span style="color:var(--text-sub); font-size:1.3rem;">暫無即時班次</span>';
           subEl.innerHTML = '';
         }
       } catch(err) {
-        badgeEl.innerHTML = '<span style="color:var(--sakura-pink); font-size:1.1rem;">連線異常</span>';
+        badgeEl.innerHTML = '<span style="color:var(--sakura-pink); font-size:1.3rem;">連線異常</span>';
       }
     }
 
