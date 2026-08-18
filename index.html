@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>iPad Mini Dashboard</title>
+  <title>iPad Mini Smart Dashboard</title>
   
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800&display=swap" rel="stylesheet">
   
@@ -183,17 +183,16 @@
       border-radius: 6px;
     }
 
-    /* ☀️ 天氣卡片：拉高填滿空間 */
+    /* ☀️ 天氣卡片 */
     .weather-content {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       flex: 1;
-      padding-top: 6px;
+      padding-top: 4px;
       gap: 6px;
     }
 
-    /* 地點 + 即時概況頂部行 */
     .weather-header-row {
       display: flex;
       justify-content: space-between;
@@ -216,7 +215,6 @@
       border-radius: 8px;
     }
 
-    /* 氣溫拉高展示區 */
     .weather-hero {
       display: flex;
       align-items: center;
@@ -224,7 +222,7 @@
       background: #FAFAFA;
       border-radius: 14px;
       padding: 8px 14px;
-      flex: 1; /* 拉高主溫度 */
+      flex: 1;
     }
 
     .weather-temp-group {
@@ -253,11 +251,10 @@
       line-height: 1;
     }
 
-    /* 濕度 + 降雨概率：高度加倍拉伸 */
     .weather-metrics {
       display: flex;
       gap: 8px;
-      height: 48px; /* 拉高填滿 */
+      height: 48px;
     }
 
     .metric-pill {
@@ -282,7 +279,6 @@
       color: var(--text-main);
     }
 
-    /* 🕒 每小時預報時間軸 */
     .hourly-forecast-box {
       background: #FFFBF2;
       border: 1.5px solid var(--sakura-light);
@@ -343,7 +339,7 @@
       color: var(--sora-blue);
     }
 
-    /* 🚌 巴士內容 */
+    /* 🚌 巴士卡片 */
     .bus-list {
       display: flex;
       flex-direction: column;
@@ -446,7 +442,7 @@
       border-radius: 6px;
     }
 
-    /* 3️⃣ 底部 電台 Bar：fixed 物理鎖定在最底層 (高 50px) 🌟 */
+    /* 3️⃣ 底部 電台 Bar：fixed 物理鎖死在最底層 (高 50px) */
     .radio-card {
       position: fixed;
       bottom: 8px;
@@ -462,7 +458,7 @@
       justify-content: space-between;
       gap: 8px;
       box-shadow: 0 3px 8px rgba(255, 143, 163, 0.15);
-      z-index: 9999; /* 絕對最高層級 */
+      z-index: 99999;
     }
 
     .radio-left {
@@ -543,7 +539,7 @@
 </head>
 <body>
 
-  <!-- 1️⃣ 頂部 Header (Fixed) -->
+  <!-- 1️⃣ 頂部 Header -->
   <header>
     <div class="time-group">
       <div class="time-display" id="clock">--:--:--</div>
@@ -561,7 +557,7 @@
     </div>
   </header>
 
-  <!-- 2️⃣ 中間 主網格 (Fixed) -->
+  <!-- 2️⃣ 中間 主網格 -->
   <main class="dashboard-grid">
     <!-- 天氣卡片 (林村 + 充實拉高) -->
     <section class="card card-weather">
@@ -570,13 +566,11 @@
         <span class="jp-subtitle">毎時予報</span>
       </div>
       <div class="weather-content">
-        <!-- 地點與概況行 -->
         <div class="weather-header-row">
           <div class="weather-place-pill">林村 🎯</div>
           <div class="weather-status-badge" id="weather-desc">多雲 / 局部驟雨</div>
         </div>
 
-        <!-- 氣溫大字展示區 -->
         <div class="weather-hero">
           <div class="weather-temp-group">
             <div class="weather-temp" id="curr-temp">27.2°</div>
@@ -585,7 +579,6 @@
           <div class="weather-hero-icon" id="weather-hero-icon">☁️</div>
         </div>
 
-        <!-- 濕度 + 降雨概率 (拉高) -->
         <div class="weather-metrics">
           <div class="metric-pill">
             <span class="label">💧 相對濕度</span>
@@ -597,14 +590,13 @@
           </div>
         </div>
 
-        <!-- 🕒 每小時預報時間軸 -->
         <div class="hourly-forecast-box">
           <div class="hourly-title">
             <span>📅 每小時氣溫與降雨預測</span>
             <span>逐時趨勢</span>
           </div>
           <div class="hourly-timeline" id="hourly-timeline">
-            <!-- JS 動態生成 -->
+            <!-- JS 動態生成每小時預測 -->
           </div>
         </div>
       </div>
@@ -622,7 +614,7 @@
     </section>
   </main>
 
-  <!-- 3️⃣ 底部 電台卡片 (Fixed 釘底) -->
+  <!-- 3️⃣ 底部 電台卡片 (固定釘底) -->
   <footer class="radio-card">
     <div class="radio-left">
       <div class="radio-icon">📻</div>
@@ -645,7 +637,9 @@
   </footer>
 
   <script>
-    // 📻 電台配置
+    // ==========================================
+    // 📻 電台配置 (iOS 12 Safari 高相容性)
+    // ==========================================
     const STATIONS = [
       { name: "香港電台 第一台 (新聞/交通)", url: "https://rthkaudio1-lh.akamaihd.net/i/radio1_1@355864/master.m3u8" },
       { name: "香港電台 第二台 (流行/娛樂)", url: "https://rthkaudio2-lh.akamaihd.net/i/radio2_1@355865/master.m3u8" },
@@ -709,7 +703,9 @@
     audioEl.addEventListener('waiting', () => { statusEl.textContent = "緩衝中 ⏳..."; });
     audioEl.addEventListener('error', () => { statusEl.textContent = "無法連線 ❌"; });
 
+    // ==========================================
     // 🕒 時鐘邏輯
+    // ==========================================
     const jpDays = ["日", "月", "火", "水", "木", "金", "土"];
     function updateClock() {
       const now = new Date();
@@ -721,115 +717,33 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 🚌 巴士設定
+    // ==========================================
+    // 🚌 巴士設定：精確 Stop ID + 往大埔方向 (Inbound)
+    // ==========================================
     const BUS_TRACKS = [
-  {
-    id: "kau_liu_ha_64k",
-    route: "64K",
-    bound: "I", // I = Inbound (往太和/大埔墟站方向)
-    serviceType: "1",
-    stopId: "9C441E976527BC1B", // 較寮下 (往大埔方向精確站碼)
-    destName: "太和 / 大埔",
-    displayStop: "較寮下 巴士站"
-  },
-  {
-    id: "hang_ha_po_64k",
-    route: "64K",
-    bound: "I", // I = Inbound (往太和/大埔墟站方向)
-    serviceType: "1",
-    stopId: "8D237A9B7A668E21", // 坑下甫 (往大埔方向精確站碼)
-    destName: "太和 / 大埔",
-    displayStop: "坑下甫 巴士站"
-  }
-];
-
-async function fetchBusETA() {
-  const container = document.getElementById('bus-container');
-  if (container.children.length === 0) {
-    BUS_TRACKS.forEach(item => {
-      container.innerHTML += `
-        <div class="bus-item" id="card-${item.id}">
-          <div class="bus-item-top">
-            <div class="bus-info">
-              <div class="bus-route">${item.route}</div>
-              <div class="bus-meta">
-                <div class="dest">往 ${item.destName}</div>
-                <div class="stop-name">🚍 ${item.displayStop}</div>
-              </div>
-            </div>
-            <div class="eta-badge" id="eta-badge-${item.id}">
-              <span>讀取中...</span>
-            </div>
-          </div>
-          <div class="bus-item-bottom" id="eta-sub-${item.id}">
-            <span class="next-label">後續班次:</span>
-            <span class="next-pill">--</span>
-          </div>
-        </div>`;
-    });
-  }
-
-  const nowTime = new Date().getTime();
-
-  for (const item of BUS_TRACKS) {
-    const badgeEl = document.getElementById(`eta-badge-${item.id}`);
-    const subEl = document.getElementById(`eta-sub-${item.id}`);
-    
-    try {
-      // 直接使用官方 Stop ID 查詢，消除動態比對錯誤
-      const etaUrl = `https://data.etabus.gov.hk/v1/transport/kmb/eta/${item.stopId}/${item.route}/${item.serviceType}`;
-      const res = await fetch(etaUrl);
-      const json = await res.json();
-
-      if (json.data && json.data.length > 0) {
-        // 嚴格過濾：必須是往大埔方向 (dir === 'I')，且具有有效 ETA
-        const validEtas = json.data
-          .filter(d => d.dir === item.bound && d.eta)
-          .map(d => {
-            const etaDate = new Date(d.eta);
-            // 採用 Math.floor (無條件捨去) 完全貼合九巴 App 算法
-            const diffMin = Math.floor((etaDate.getTime() - nowTime) / 60000);
-            const exactHours = String(etaDate.getHours()).padStart(2, '0');
-            const exactMinutes = String(etaDate.getMinutes()).padStart(2, '0');
-            return {
-              min: diffMin,
-              exactTime: `${exactHours}:${exactMinutes}`
-            };
-          })
-          .filter(d => d.min >= 0);
-
-        if (validEtas.length > 0) {
-          const first = validEtas[0];
-          const isSoon = first.min <= 3;
-
-          badgeEl.className = `eta-badge ${isSoon ? 'soon' : ''}`;
-          badgeEl.innerHTML = `
-            <span>${first.min === 0 ? '即將抵達 🏃' : first.min + ' 分鐘'}</span>
-            <span class="exact-time">${first.exactTime}</span>
-          `;
-
-          const nextEtas = validEtas.slice(1, 3);
-          if (nextEtas.length > 0) {
-            const nextHtml = nextEtas.map(d => `<span class="next-pill">${d.min}分 (${d.exactTime})</span>`).join('');
-            subEl.innerHTML = `<span class="next-label">後續班次:</span> ${nextHtml}`;
-          } else {
-            subEl.innerHTML = `<span class="next-label">暫無後續班次</span>`;
-          }
-        } else {
-          badgeEl.innerHTML = `<span style="color:var(--text-sub); font-size:1rem;">沒有班次</span>`;
-          subEl.innerHTML = ``;
-        }
+      {
+        id: "kau_liu_ha_64k",
+        route: "64K",
+        bound: "I",
+        serviceType: "1",
+        stopId: "9C441E976527BC1B",
+        destName: "太和 / 大埔",
+        displayStop: "較寮下 巴士站"
+      },
+      {
+        id: "hang_ha_po_64k",
+        route: "64K",
+        bound: "I",
+        serviceType: "1",
+        stopId: "8D237A9B7A668E21",
+        destName: "太和 / 大埔",
+        displayStop: "坑下甫 巴士站"
       }
-    } catch (err) {
-      console.warn("ETA 載入失敗:", err);
-    }
-  }
+    ];
 
-  const now = new Date();
-  document.getElementById('bus-updated').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-}
-
-    // 🌦️ 香港天文台：林村數據 + 每小時預測
+    // ==========================================
+    // 🌦️ 天氣 API：林村數據 + 每小時趨勢
+    // ==========================================
     async function fetchWeather() {
       try {
         const rhrRes = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc');
@@ -859,7 +773,9 @@ async function fetchBusETA() {
 
         const now = new Date();
         document.getElementById('weather-updated').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-      } catch (err) {}
+      } catch (err) {
+        console.warn("天氣更新失敗:", err);
+      }
     }
 
     function renderHourlyTimeline() {
@@ -906,26 +822,9 @@ async function fetchBusETA() {
       }
     }
 
-    async function resolveStopId(item) {
-      if (cachedStopIds[item.id]) return cachedStopIds[item.id];
-      try {
-        const url = `https://data.etabus.gov.hk/v1/transport/kmb/route-stop/${item.route}/${item.bound}/${item.serviceType}`;
-        const res = await fetch(url);
-        const json = await res.json();
-        if (json.data) {
-          for (const stopItem of json.data) {
-            const stopInfoRes = await fetch(`https://data.etabus.gov.hk/v1/transport/kmb/stop/${stopItem.stop}`);
-            const stopInfo = await stopInfoRes.json();
-            if (stopInfo.data && stopInfo.data.name_tc.includes(item.targetStopName)) {
-              cachedStopIds[item.id] = stopItem.stop;
-              return stopItem.stop;
-            }
-          }
-        }
-      } catch (e) {}
-      return null;
-    }
-
+    // ==========================================
+    // 🚌 巴士 ETA：貼合 App 算法 (Math.floor)
+    // ==========================================
     async function fetchBusETA() {
       const container = document.getElementById('bus-container');
       if (container.children.length === 0) {
@@ -952,22 +851,22 @@ async function fetchBusETA() {
         });
       }
 
+      const nowTime = new Date().getTime();
+
       for (const item of BUS_TRACKS) {
         const badgeEl = document.getElementById(`eta-badge-${item.id}`);
         const subEl = document.getElementById(`eta-sub-${item.id}`);
         try {
-          const stopId = await resolveStopId(item);
-          if (!stopId) continue;
-          const etaUrl = `https://data.etabus.gov.hk/v1/transport/kmb/eta/${stopId}/${item.route}/${item.serviceType}`;
+          const etaUrl = `https://data.etabus.gov.hk/v1/transport/kmb/eta/${item.stopId}/${item.route}/${item.serviceType}`;
           const res = await fetch(etaUrl);
           const json = await res.json();
 
           if (json.data && json.data.length > 0) {
             const validEtas = json.data
-              .filter(d => d.eta)
+              .filter(d => d.dir === item.bound && d.eta)
               .map(d => {
                 const etaDate = new Date(d.eta);
-                const diffMin = Math.round((etaDate - new Date()) / 60000);
+                const diffMin = Math.floor((etaDate.getTime() - nowTime) / 60000);
                 const exactHours = String(etaDate.getHours()).padStart(2, '0');
                 const exactMinutes = String(etaDate.getMinutes()).padStart(2, '0');
                 return {
@@ -999,8 +898,11 @@ async function fetchBusETA() {
               subEl.innerHTML = ``;
             }
           }
-        } catch (err) {}
+        } catch (err) {
+          console.warn("ETA 載入失敗:", err);
+        }
       }
+
       const now = new Date();
       document.getElementById('bus-updated').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
     }
@@ -1012,6 +914,7 @@ async function fetchBusETA() {
       setTimeout(() => { btn.classList.remove('spinning'); }, 500);
     }
 
+    // 啟動與定時更新 (天氣 10 分鐘，巴士 30 秒)
     fetchWeather();
     fetchBusETA();
     setInterval(fetchWeather, 600000);
